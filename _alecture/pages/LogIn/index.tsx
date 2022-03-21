@@ -1,10 +1,10 @@
 import useInput from '@hooks/useInput';
 import { Success, Form, Error, Label, Input, LinkContainer, Button, Header } from '@pages/SignUp/styles';
+import fetcher from '@utils/fetcher';
 import axios from 'axios';
 import React, { useCallback, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import useSWR from 'swr';
-import fetcher from '@utils/fetcher';
 
 const LogIn = () => {
   const { data, error, revalidate, mutate } = useSWR('/api/users', fetcher);
@@ -25,7 +25,7 @@ const LogIn = () => {
           },
         )
         .then((response) => {
-          mutate(response.data, false);
+          revalidate();
         })
         .catch((error) => {
           setLogInError(error.response?.data?.statusCode === 401);
@@ -39,7 +39,7 @@ const LogIn = () => {
   }
 
   if (data) {
-    return <Redirect to="/workspace/channel" />;
+    return <Redirect to="/workspace/sleact/channel/일반" />;
   }
 
   // console.log(error, userData);
